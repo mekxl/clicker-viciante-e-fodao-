@@ -1,25 +1,41 @@
+import { calculateRunReward } from './MetaSystem.js';
+
 export class RunManager {
-  constructor(state, { target, currency, combo, feedback, ui }) {
-    Object.assign(this, { state, target, currency, combo, feedback, ui });
+  constructor(state, sys) {
+    Object.assign(this, { state }, sys);
     this.target.onDeath = () => this.endRun();
   }
   startRun() {
-    this.state.resetRun();     // reseta HP, cliques, combo, multiplicadores...
+    const r = this.state.run;
+    this.state.resetRun();            // RUN STATE zera; META STATE permanece
+    this.stats.clearRun();
+    this.meta.applyTo(this.stats);    // aplica bônus permanentes
+    r.maxHP = r.currentHP = Math.round(this.stats.get('maxHP'));
     this.currency.reset();
+    this.currency.addEnergy(Math.round(this.stats.get('startEnergy')));
     this.combo.reset();
-    this.target.reset();
     this.feedback.clear();
-    this.state.run.isRunActive = true;
-    this.ui.render();
-    this.ui.renderComboTimer(0);
-    this.ui.hideOverlay();
+    r.isRunActive = true;
+    this.ui.hideOverlay(); this.ui.hideChoices();
+    this.ui.render(); this.ui.renderBuild(); this.ui.renderComboTimer(0);
   }
   endRun() {
-    if (!this.state.run.isRunActive) return;
-    this.state.run.isRunActive = false;
+    const r = this.state.run;
+    if (!r.isRunActive) return;
+    r.isRunActive = false;
+    const reward = calculateRunReward(r);
+    this.meta.addFragments(reward);
     this.feedback.death();
     this.ui.render();
-    this.ui.showEnd();
+    const summary = { clicks: r.totalClicks, damage: r.totalDamage, maxCombo: r.maxCombo,
+      upgrades: Object.values(r.upgrades).reduce((a, b) => a + b, 0), reward };
+    setTimeout(() => this.ui.showEnd(summary, () => this.showHub()), 600);
   }
   restartRun() { this.startRun(); }
+  showHub() {
+    this.ui.showHub(this.meta, {
+      onStart: () => this.startRun(),
+      onBuy: id => { this.meta.buy(id); this.showHub(); },
+    });
+  }
 }

@@ -1,13 +1,9 @@
 import { CONFIG } from './config.js';
 
 export class ComboSystem {
-  constructor(state) {
-    this.state = state;
-    this.comboTimeout = CONFIG.comboTimeout;
-  }
-  multiplierFor(combo) {
-    return CONFIG.comboTiers.find(t => combo >= t.min).mult;
-  }
+  constructor(state, stats) { this.state = state; this.stats = stats; }
+  get comboTimeout() { return Math.max(200, this.stats.get('comboTimeout')); }
+  multiplierFor(c) { return CONFIG.comboTiers.find(t => c >= t.min).mult; }
   register(now) {
     const r = this.state.run;
     r.currentCombo++;
@@ -15,23 +11,16 @@ export class ComboSystem {
     r.comboMultiplier = this.multiplierFor(r.currentCombo);
     r.lastClickTime = now;
   }
-  // Chamado a cada frame; retorna true se o combo expirou.
-  update(now) {
+  update(now) { // retorna true se expirou
     const r = this.state.run;
-    if (r.isRunActive && r.currentCombo > 0 && now - r.lastClickTime > this.comboTimeout) {
-      this.reset();
-      return true;
+    if (r.isRunActive && !r.isPaused && r.currentCombo > 0 && now - r.lastClickTime > this.comboTimeout) {
+      this.reset(); return true;
     }
     return false;
   }
   timeRatio(now) {
     const r = this.state.run;
-    if (r.currentCombo === 0) return 0;
-    return Math.max(0, 1 - (now - r.lastClickTime) / this.comboTimeout);
+    return r.currentCombo === 0 ? 0 : Math.max(0, 1 - (now - r.lastClickTime) / this.comboTimeout);
   }
-  reset() {
-    const r = this.state.run;
-    r.currentCombo = 0;
-    r.comboMultiplier = 1;
-  }
+  reset() { const r = this.state.run; r.currentCombo = 0; r.comboMultiplier = 1; }
 }
