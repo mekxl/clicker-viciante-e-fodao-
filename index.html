@@ -9,19 +9,24 @@
 <body>
 <canvas id="fx"></canvas>
 <div id="floaters"></div>
+<div id="flash"></div>
+<div id="banner" aria-live="polite"></div>
 <main>
   <section class="hud top">
-    <div class="hp-label"><span>CORE HP</span><span id="hpText">0 / 0</span></div>
+    <div class="hp-label"><span id="enemyName">INIMIGO</span><span id="hpText">0 / 0</span></div>
     <div class="bar"><div id="hpFill"></div></div>
+    <div class="bar brk"><div id="breakFill"></div></div>
+    <div class="hp-label sub"><span id="breakLabel">BREAK</span><span id="encounterInfo"></span></div>
     <div id="build"></div>
   </section>
-  <div id="stage"><div id="core" role="button" aria-label="CORE"></div></div>
+  <div id="stage"><div id="core" role="button" aria-label="Inimigo"></div></div>
   <section class="hud bottom">
     <div class="stat"><b id="energy">0</b><small>Energy</small></div>
     <div class="stat"><b id="damage">0</b><small>Damage</small></div>
     <div class="stat"><b id="combo">x1</b><small>Combo <i id="comboCount">0</i></small></div>
     <div class="stat"><b id="clicks">0</b><small>Clicks</small></div>
     <div class="bar thin"><div id="comboFill"></div></div>
+    <button id="retreat" class="ghost" tabindex="-1">Encerrar run</button>
   </section>
 </main>
 
