@@ -13,10 +13,9 @@
   <section class="hud top">
     <div class="hp-label"><span>CORE HP</span><span id="hpText">0 / 0</span></div>
     <div class="bar"><div id="hpFill"></div></div>
+    <div id="build"></div>
   </section>
-
   <div id="stage"><div id="core" role="button" aria-label="CORE"></div></div>
-
   <section class="hud bottom">
     <div class="stat"><b id="energy">0</b><small>Energy</small></div>
     <div class="stat"><b id="damage">0</b><small>Damage</small></div>
@@ -26,11 +25,12 @@
   </section>
 </main>
 
-<div id="overlay">
-  <h1>BREAK//CORE</h1>
-  <p id="overlayMsg">Clique no núcleo até ele quebrar.</p>
-  <button id="startBtn">Start run</button>
+<div id="choice" class="hidden">
+  <h2>Escolha uma</h2>
+  <div id="cards"></div>
+  <p>Teclas 1, 2 ou 3 também funcionam</p>
 </div>
+<div id="overlay"><div id="panel"></div></div>
 <script type="module" src="js/main.js"></script>
 </body>
 </html>
