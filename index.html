@@ -1,1 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BREAK//CORE</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<canvas id="fx"></canvas>
+<div id="floaters"></div>
+<main>
+  <section class="hud top">
+    <div class="hp-label"><span>CORE HP</span><span id="hpText">0 / 0</span></div>
+    <div class="bar"><div id="hpFill"></div></div>
+  </section>
 
+  <div id="stage"><div id="core" role="button" aria-label="CORE"></div></div>
+
+  <section class="hud bottom">
+    <div class="stat"><b id="energy">0</b><small>Energy</small></div>
+    <div class="stat"><b id="damage">0</b><small>Damage</small></div>
+    <div class="stat"><b id="combo">x1</b><small>Combo <i id="comboCount">0</i></small></div>
+    <div class="stat"><b id="clicks">0</b><small>Clicks</small></div>
+    <div class="bar thin"><div id="comboFill"></div></div>
+  </section>
+</main>
+
+<div id="overlay">
+  <h1>BREAK//CORE</h1>
+  <p id="overlayMsg">Clique no núcleo até ele quebrar.</p>
+  <button id="startBtn">Start run</button>
+</div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
