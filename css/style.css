@@ -59,3 +59,37 @@ button:focus-visible{outline:3px solid var(--hot);outline-offset:3px}
 .shop b i{font-style:normal;color:var(--dim);font-size:.8rem}
 .shop span{color:var(--dim);font-size:.8rem;grid-column:1}.shop em{grid-row:1/3;grid-column:2;align-self:center;font-style:normal;color:#fbbf24}
 .shop:hover:not(:disabled){border-color:var(--c);background:#131c2e}.shop:disabled{opacity:.45;cursor:not-allowed}
+
+/* ---- Etapa 3: combate ---- */
+#core{width:calc(min(56vmin,320px) * var(--sz,1));--c:var(--ec,#38e8ff)}
+.hp-label.sub{margin:6px 0 0;font-size:.75rem}
+.bar.brk{height:8px;margin-top:6px}
+#breakFill{height:100%;width:100%;transform-origin:left;background:linear-gradient(90deg,#fbbf24,#ff9f43);transition:transform .08s linear}
+#retreat{margin-left:auto;background:transparent;color:var(--dim);border:1px solid #243049;font-size:.8rem;padding:6px 12px;font-weight:400}
+#retreat:hover{color:var(--ink);background:#131c2e}
+#flash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:5}
+#banner{position:fixed;left:50%;top:36%;translate:-50% -50%;z-index:6;pointer-events:none;opacity:0;white-space:nowrap;
+ font-weight:900;font-size:clamp(2.4rem,12vw,5.5rem);letter-spacing:.1em;color:#fff;text-shadow:0 0 28px var(--hot),0 0 4px #000}
+#banner.small{font-size:clamp(1.4rem,6vw,2.4rem);letter-spacing:.2em;text-shadow:0 0 18px var(--c)}
+
+/* BREAK: o CORE e a barra mudam de cor; floaters ficam quentes */
+html.break-mode #core{--c:var(--hot);animation:breakPulse .3s ease-in-out infinite alternate}
+html.break-mode #breakFill{background:var(--hot)}
+html.break-mode .floater{color:#ffd1e1;text-shadow:0 0 10px var(--hot)}
+@keyframes breakPulse{from{filter:brightness(1) saturate(1.2)}to{filter:brightness(1.45) saturate(1.7)}}
+
+/* estados de comportamento (data-status) */
+#core[data-status=reflect]{filter:saturate(.25) brightness(1.3)}
+#core[data-status=open]{--c:#ffffff}
+#core[data-status=critical]{animation:jitter .1s linear infinite}
+#core[data-status=vulnerable]{--c:#fbbf24}
+#core[data-status=gaze]{filter:grayscale(.7) brightness(.75)}
+@keyframes jitter{0%{translate:-3px 0}50%{translate:3px 1px}100%{translate:-3px 0}}
+
+/* O OBSERVADOR: o CORE vira um olho */
+#core[data-type=boss]{position:relative}
+#core[data-type=boss]::after{content:"";position:absolute;left:50%;top:50%;width:24%;height:44%;translate:-50% -50%;border-radius:50%;
+ background:radial-gradient(ellipse,#05000c 0,#1b0036 58%,transparent 62%);transition:height .2s,background .2s}
+#core[data-type=boss][data-status=gaze]::after{height:7%;background:var(--hot)}
+#core[data-type=boss][data-status=vulnerable]::after{height:60%}
+@media (prefers-reduced-motion:reduce){html.break-mode #core,#core[data-status=critical]{animation:none}}
