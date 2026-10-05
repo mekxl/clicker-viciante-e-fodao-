@@ -3,7 +3,8 @@
 import { CONFIG } from './config.js';
 
 const BASE = { damage: CONFIG.damagePerClick, energy: CONFIG.energyPerClick,
-  comboTimeout: CONFIG.comboTimeout, maxHP: CONFIG.maxHP };
+  comboTimeout: CONFIG.comboTimeout, maxHP: CONFIG.maxHP,
+  breakDamage: CONFIG.combat.breakDamagePerClick };
 // Futuro: criticalChance, criticalMultiplier, automationDamage... basta usar o nome.
 
 export class StatSystem {

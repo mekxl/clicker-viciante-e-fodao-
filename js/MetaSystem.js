@@ -5,8 +5,9 @@ import { META_UPGRADES } from './metaUpgrades.js';
 export function calculateRunReward(run) {
   const k = CONFIG.reward;
   const raw = run.totalClicks * k.perClick + Math.sqrt(run.totalDamage) * k.perSqrtDamage
-    + run.milestoneIndex * k.perMilestone + run.maxCombo * k.perCombo;
-  return Math.max(1, Math.floor(raw)); // cresce de forma sublinear, limitada pelo HP do alvo
+    + run.milestoneIndex * k.perMilestone + run.maxCombo * k.perCombo
+    + (run.enemiesDefeated || 0) * k.perEnemy + (run.bossesDefeated || 0) * k.perBoss;
+  return Math.max(1, Math.floor(raw)); // cresce de forma sublinear, 
 }
 
 export class MetaSystem {

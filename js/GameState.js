@@ -8,6 +8,10 @@ function createRunState() {
     energy: 0, totalClicks: 0, totalDamage: 0,
     currentCombo: 0, maxCombo: 0, comboMultiplier: 1, lastClickTime: 0,
     upgrades: {}, tagCounts: {}, milestoneIndex: 0, pendingChoices: 0, overloadUntil: 0,
+    // Etapa 3: progressão e estatísticas de combate (currentHP/maxHP acima agora espelham o INIMIGO atual)
+    coreHP: CONFIG.maxHP, coreMaxHP: CONFIG.maxHP, // HP do jogador (reservado)
+    stage: 0, encounterIndex: 0, difficultyTier: 0,
+    enemiesDefeated: 0, bossesDefeated: 0, totalBreaks: 0, highestDamageHit: 0, highestMultiplier: 1,
   };
 }
 // META STATE: persiste entre runs (carregado/salvo pelo MetaSystem).
